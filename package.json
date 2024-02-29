@@ -1,0 +1,11 @@
+{
+  "name": "pizza-store",
+  "version": "1.0.0",
+  "description": "A full-stack application designed for a pizza store, providing functionalities to show, add, delete, and update toppings and recipes.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vince Gonzalez",
+  "license": "MIT"
+}
