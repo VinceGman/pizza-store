@@ -1,0 +1,36 @@
+<div class="recipe">
+    <div class="recipe-name-and-buttons">
+        <span class="recipe-name"><%- recipe.name %></span>
+        <div class="button-container">
+            <button class="edit-btn" onclick="editRecipe(this, '<%- recipe.name %>')">Edit</button>
+            <button class="delete-btn" onclick="deleteRecipe(this, '<%- recipe.name %>')">Delete</button>
+        </div>
+    </div>
+    <div class="recipe-toppings-list">
+        <% recipe.toppings.forEach(function(topping) { %>
+            <div class="recipe-topping-item">
+                <%- topping %>
+                    <% if (!toppings.includes(topping)) { %>
+                        <span class="topping-warning-icon" title="Topping not available">&#9888;</span>
+                        <% } %>
+            </div>
+            <% }); %>
+    </div>
+</div>
+
+<template id="recipeTemplate">
+    <div class="recipe">
+        <div class="recipe-name-and-buttons">
+            <span class="recipe-name"><%- recipe.name %></span>
+            <div class="button-container">
+                <button class="edit-btn" onclick="editRecipe(this, '<%- recipe.name %>')">Edit</button>
+                <button class="delete-btn" onclick="deleteRecipe(this, '<%- recipe.name %>')">Delete</button>
+            </div>
+        </div>
+        <div class="recipe-toppings-list">
+            <% recipe.toppings.forEach(function(topping) { %>
+                <div class="recipe-topping-item"><%- topping %></div>
+                <% }); %>
+        </div>
+    </div>
+</template>

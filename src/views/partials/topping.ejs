@@ -1,0 +1,17 @@
+<div class="topping">
+    <span class="topping-name"><%- topping.name %></span>
+    <div class="button-container">
+        <button class="edit-btn" onclick="editTopping(this, '<%- topping.name %>')">Edit</button>
+        <button class="delete-btn" onclick="deleteTopping(this, '<%- topping.name %>')">Delete</button>
+    </div>
+</div>
+
+<template id="toppingTemplate">
+    <div class="topping">
+        <span class="topping-name"><%- topping.name %></span>
+        <div class="button-container">
+            <button class="edit-btn" onclick="editTopping(this, '<%- topping.name %>')">Edit</button>
+            <button class="delete-btn" onclick="deleteTopping(this, '<%- topping.name %>')">Delete</button>
+        </div>
+    </div>
+</template>
