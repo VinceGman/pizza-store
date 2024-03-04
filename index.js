@@ -30,5 +30,9 @@ app.use('/chef/recipes', recipeRoutes);
 // Serve static files from the 'public' directory
 app.use(express.static('public'));
 
-// Start server on specified port
-app.listen(port, () => console.log(`Server running on port: ${port}`));
+// Start server on specified port when not in test environment
+if (process.env.NODE_ENV !== 'test') {
+    app.listen(port, () => console.log(`Server running on port: ${port}`));
+}
+
+module.exports = app;
