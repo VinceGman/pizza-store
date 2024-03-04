@@ -1,0 +1,55 @@
+/* General button styling */
+
+.button-container {
+    /* Optional: if you want the buttons to be closer together, you can adjust the gap */
+    gap: 4px;
+    display: flex;
+}
+
+button {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    min-width: 50px;
+    box-sizing: border-box;
+
+    /* padding: 10px 20px; */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    /* font-size: 14px; */
+    transition: background-color 0.3s ease;
+}
+
+/* Edit button specific styling */
+button.edit-btn {
+    background-color: #2196F3;
+    /* Blue */
+    color: white;
+}
+
+button.edit-btn:hover {
+    background-color: #1976D2;
+}
+
+/* Update button specific styling */
+button.update-btn {
+    background-color: #4CAF50;
+    /* Green */
+    color: white;
+}
+
+button.update-btn:hover {
+    background-color: #45a049;
+}
+
+/* Delete button specific styling */
+button.delete-btn {
+    background-color: #f44336;
+    /* Red */
+    color: white;
+}
+
+button.delete-btn:hover {
+    background-color: #da190b;
+}
