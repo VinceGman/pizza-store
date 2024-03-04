@@ -160,7 +160,6 @@ describe('Recipe API Test Suite', () => {
             .delete('/chef/recipes/Cheese')
 
         expect(response.statusCode).toBe(200);
-        console.log(JSON.parse(response.text));
         expect(JSON.parse(response.text)).toStrictEqual({ "message": "Delete: Success", "recipe": { name: 'Cheese' } })
     });
 
