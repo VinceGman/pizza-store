@@ -3,8 +3,13 @@
 
 To make the testing experience smooth, I have included a service-account.json file with the necessary Google Firestore credentials. You will find this file attached to the email that provided you with the link to this project. Please place that file in the root of this project.
 
+download node -> [https://nodejs.org/en](https://nodejs.org/en)
 
-type `npm install`
+open terminal, type `node -v` to verify installation
+
+download project -> [https://github.com/VinceGman/pizza-store](https://github.com/VinceGman/pizza-store)
+
+type `npm install` to install necessary project packages
 
 
 then: 
