@@ -1,11 +1,12 @@
 function addToppingToPage(topping) {
+    // Grab element for topping and clones it
     const template = document.getElementById('toppingTemplate');
     const newToppingDiv = document.importNode(template.content, true);
 
     // Set the topping name
     newToppingDiv.querySelector('.topping-name').textContent = topping.name;
 
-    // Optionally set onclick handlers for the buttons
+    // Set onclick handlers for the buttons
     let editButton = newToppingDiv.querySelector('.edit-btn');
     editButton.onclick = () => editTopping(editButton, topping.name);
     let deleteButton = newToppingDiv.querySelector('.delete-btn');
@@ -16,11 +17,12 @@ function addToppingToPage(topping) {
 }
 
 function editTopping(button, toppingName) {
+    // Create input field with data
     var span = button.closest('.topping').querySelector('.topping-name');
     var input = document.createElement('input');
     input.type = 'text';
     input.value = toppingName;
-    input.className = 'topping-name-input'; // You can style this class as needed
+    input.className = 'topping-name-input';
 
     // Replace the <span> with the <input>
     span.parentNode.replaceChild(input, span);
@@ -32,7 +34,8 @@ function editTopping(button, toppingName) {
     // Define the event listener as a named function
     const handleEnterPress = function (e) {
         if (e.key === 'Enter') {
-            input.removeEventListener('keypress', handleEnterPress); // Remove the event listener
+            input.removeEventListener('keypress', handleEnterPress); // Remove the event listener, stop it from firing again
+            // Call update topping with correct params on keypress
             updateTopping(button, toppingName, input.value);
         }
     };
@@ -44,27 +47,32 @@ function editTopping(button, toppingName) {
     button.className = 'update-btn';
     button.textContent = 'Update';
     button.onclick = function () {
-        input.removeEventListener('keypress', handleEnterPress); // Also remove the listener here
+        input.removeEventListener('keypress', handleEnterPress); // Remove the event listener, stop it from firing again
+        // Call update topping with correct params on button press
         updateTopping(button, toppingName, input.value);
     };
 }
 
 async function updateTopping(button, prevName, newName) {
     try {
+        // Call PUT on toppings API to update topping
         const response = await fetch(`/owner/toppings/${encodeURIComponent(prevName)}/${encodeURIComponent(newName)}`, { method: 'PUT' });
         
+        // If response fails or if the name didn't change at all, it will just set the elements back to old name
         if (!response.ok || (newName == prevName)) { newName = prevName; }
         
-        if (!response.ok) {
+        if (!response.ok) { // Throw Error if response not ok
             const errorText = await response.text(); // Attempt to read response text
             throw new Error(`Network response was not ok: ${response.status} ${response.statusText}. Server message: ${errorText}`);
         }
-        const deletedToppingRes = await response.json();
-
+        // Receives data of updated topping
+        const updatedToppingRes = await response.json();
     } catch (error) {
+        // Catches errors
         console.error('Error:', error);
     }
 
+    // Creates span and assigns appropriate topping information
     var toppingElement = button.closest('.topping');
     var input = toppingElement.querySelector('.topping-name-input');
     var span = document.createElement('span');
@@ -88,35 +96,40 @@ async function updateTopping(button, prevName, newName) {
 
 async function deleteTopping(element, toppingName) {
     try {
+        // Call DELETE method on toppings API, to delete topping
         const response = await fetch('/owner/toppings/' + encodeURIComponent(toppingName), { method: 'DELETE' });
-        if (!response.ok) {
+        if (!response.ok) { // Throw Error if response not ok
             throw new Error('Network response was not ok');
         }
 
+        // Receives deleted topping data
         const deletedToppingRes = await response.json();
 
+        // Removes element
         const toppingDiv = element.closest('.topping');
         if (toppingDiv) toppingDiv.remove();
 
     } catch (error) {
-        // console.error('Error:', error);
+        // Catches errors
+        console.error('Error:', error);
     }
 }
 
 document.getElementById('add-topping-form').addEventListener('submit', async function (event) {
-    event.preventDefault();
+    event.preventDefault(); // Prevent the form from submitting
 
     var toppingName = document.getElementById('topping-input').value.trim();
     if (toppingName === "") {
-        // Prevent the form from submitting
+        // Prevent attempting to add topping without a name
         document.getElementById('topping-input').placeholder = 'Needs topping name!';
         return;
     }
 
-    const data = { name: toppingName };
-    this.reset();
+    const data = { name: toppingName }; // Prepares API body data
+    this.reset(); // Resets UI element
 
     try {
+        // Calls POST method on toppings API, to add topping
         const response = await fetch('/owner/toppings', {
             method: 'POST',
             headers: {
@@ -125,15 +138,18 @@ document.getElementById('add-topping-form').addEventListener('submit', async fun
             body: JSON.stringify(data),
         });
 
-        if (!response.ok) {
+        if (!response.ok) { // Throw error if response not ok
             throw new Error('Network response was not ok');
         }
 
+        // Receives information of added topping
         const newToppingRes = await response.json();
 
-        addToppingToPage(newToppingRes.topping); // Function to update the webpage
+        // Updates page elements to include new added topping
+        addToppingToPage(newToppingRes.topping);
 
     } catch (error) {
-        // console.error('Error:', error);
+        // Catches errors
+        console.error('Error:', error);
     }
 });
